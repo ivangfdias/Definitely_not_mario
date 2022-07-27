@@ -1,23 +1,21 @@
 extends KinematicBody2D
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 export (int) var moveSpeed = 200
 export (float) var gravity = 32
 export (int) var jumpforce = 500
 var motion = Vector2()
 var sprite = null
 
+signal damage
+
 
 func _ready():
 	sprite = get_child(0)
-	
+	motion = move_and_slide(motion)
 
 # Based on Input
 func get_input():
-	
 	
 	if Input.is_action_pressed("ui_right"): # Press Right:
 		motion.x = moveSpeed # move to the right
@@ -40,10 +38,37 @@ func get_input():
 	else:
 		$Sprite.play('Normal') # Look like stop
 	
+# Treats collision with objects, will deal with items later
+func parseCollision():
+	for index in get_slide_count():
+		var collision = get_slide_collision(index)
+		var collider = collision.collider
+		
+		var layer = collider.get_collision_layer()
+		#print(layer)
+		
+		if (layer == 4): # on Collide with enemy
+			
+			if ((collision.get_angle()) < deg2rad(45)):
+				# this part should emit a signal
+				# and let the parent node deal with it
+				# (encapsulation)
+				
+				if (collider.getAlive()):
+					motion.y -= jumpforce/2
+					
+					collider.stomp()
+			else:
+				damage() # Treats damage
+				pass
+
+func damage():
+	emit_signal('damage')
+
 	
 	
 func _physics_process(delta):
 	get_input()
 	motion.y += gravity + delta # Fall
 	motion = move_and_slide(motion, Vector2.UP)
-	
+	parseCollision()

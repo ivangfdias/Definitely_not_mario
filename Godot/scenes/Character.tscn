@@ -4,6 +4,36 @@
 [ext_resource path="res://Scripts/Character.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/PlayerMovement.gd" type="Script" id=3]
 
+[sub_resource type="AtlasTexture" id=14]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 24, 24 )
+
+[sub_resource type="AtlasTexture" id=15]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 48, 0, 24, 24 )
+
+[sub_resource type="AtlasTexture" id=16]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 96, 0, 24, 24 )
+
+[sub_resource type="AtlasTexture" id=17]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 144, 0, 24, 24 )
+
+[sub_resource type="AtlasTexture" id=18]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 0, 24, 24, 24 )
+
+[sub_resource type="AtlasTexture" id=11]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 24, 24 )
+
 [sub_resource type="AtlasTexture" id=1]
 flags = 4
 atlas = ExtResource( 1 )
@@ -54,36 +84,6 @@ flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 24, 24, 24, 24 )
 
-[sub_resource type="AtlasTexture" id=14]
-flags = 4
-atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 24, 24 )
-
-[sub_resource type="AtlasTexture" id=15]
-flags = 4
-atlas = ExtResource( 1 )
-region = Rect2( 48, 0, 24, 24 )
-
-[sub_resource type="AtlasTexture" id=16]
-flags = 4
-atlas = ExtResource( 1 )
-region = Rect2( 96, 0, 24, 24 )
-
-[sub_resource type="AtlasTexture" id=17]
-flags = 4
-atlas = ExtResource( 1 )
-region = Rect2( 144, 0, 24, 24 )
-
-[sub_resource type="AtlasTexture" id=18]
-flags = 4
-atlas = ExtResource( 1 )
-region = Rect2( 0, 24, 24, 24 )
-
-[sub_resource type="AtlasTexture" id=11]
-flags = 4
-atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 24, 24 )
-
 [sub_resource type="AtlasTexture" id=12]
 flags = 4
 atlas = ExtResource( 1 )
@@ -96,11 +96,6 @@ region = Rect2( 24, 0, 24, 24 )
 
 [sub_resource type="SpriteFrames" id=19]
 animations = [ {
-"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ],
-"loop": true,
-"name": "StarWalk",
-"speed": 10.0
-}, {
 "frames": [ SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
 "loop": true,
 "name": "Star",
@@ -109,6 +104,11 @@ animations = [ {
 "frames": [ SubResource( 11 ) ],
 "loop": true,
 "name": "Normal",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ],
+"loop": true,
+"name": "StarWalk",
 "speed": 10.0
 }, {
 "frames": [ SubResource( 12 ), SubResource( 13 ) ],
@@ -127,17 +127,21 @@ extents = Vector2( 10, 9 )
 position = Vector2( 36, 36 )
 script = ExtResource( 2 )
 
-[node name="KinematicBody2D" type="KinematicBody2D" parent="."]
+[node name="Kinematic" type="KinematicBody2D" parent="."]
+collision_layer = 2
+collision_mask = 5
 script = ExtResource( 3 )
 
-[node name="Sprite" type="AnimatedSprite" parent="KinematicBody2D"]
+[node name="Sprite" type="AnimatedSprite" parent="Kinematic"]
 frames = SubResource( 19 )
 animation = "Star"
 
-[node name="KillCollision" type="CollisionShape2D" parent="KinematicBody2D"]
+[node name="KillCollision" type="CollisionShape2D" parent="Kinematic"]
 position = Vector2( 0, 9.5 )
 shape = SubResource( 20 )
 
-[node name="DamageCollision" type="CollisionShape2D" parent="KinematicBody2D"]
+[node name="DamageCollision" type="CollisionShape2D" parent="Kinematic"]
 position = Vector2( 0, -2 )
 shape = SubResource( 21 )
+
+[connection signal="damage" from="Kinematic" to="." method="_on_damage"]

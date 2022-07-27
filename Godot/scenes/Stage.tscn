@@ -1,16 +1,84 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/TileMap_Platform.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Character.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/Noomba.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/Enemy.tscn" type="PackedScene" id=4]
 
 [node name="Stage" type="Node2D"]
 
-[node name="Character" parent="." instance=ExtResource( 2 )]
-position = Vector2( -389, 343 )
-
-[node name="Camera2D2" type="Camera2D" parent="Character"]
-position = Vector2( 201, -41 )
+[node name="PlaceholderCamera" type="Camera2D" parent="."]
+position = Vector2( 32, 475 )
 current = true
 zoom = Vector2( 0.5, 0.5 )
 
+[node name="Character" parent="." instance=ExtResource( 2 )]
+position = Vector2( -205, 388 )
+
 [node name="TileMap" parent="." instance=ExtResource( 1 )]
+
+[node name="EnemySpawns" type="Node" parent="."]
+
+[node name="Noomba" parent="EnemySpawns" instance=ExtResource( 4 )]
+position = Vector2( 23, 610 )
+type = ExtResource( 3 )
+
+[node name="Noomba2" parent="EnemySpawns" instance=ExtResource( 4 )]
+position = Vector2( 317, 611 )
+type = ExtResource( 3 )
+
+[node name="Noomba3" parent="EnemySpawns" instance=ExtResource( 4 )]
+position = Vector2( 490, 610 )
+type = ExtResource( 3 )
+
+[node name="Noomba4" parent="EnemySpawns" instance=ExtResource( 4 )]
+position = Vector2( 514, 610 )
+type = ExtResource( 3 )
+
+[node name="Noomba5" parent="EnemySpawns" instance=ExtResource( 4 )]
+position = Vector2( 954, 482 )
+type = ExtResource( 3 )
+
+[node name="Noomba6" parent="EnemySpawns" instance=ExtResource( 4 )]
+position = Vector2( 988, 482 )
+type = ExtResource( 3 )
+
+[node name="Noomba7" parent="EnemySpawns" instance=ExtResource( 4 )]
+position = Vector2( 1229, 606 )
+type = ExtResource( 3 )
+
+[node name="Noomba8" parent="EnemySpawns" instance=ExtResource( 4 )]
+position = Vector2( 1252, 607 )
+type = ExtResource( 3 )
+
+[node name="Noomba9" parent="EnemySpawns" instance=ExtResource( 4 )]
+position = Vector2( 1502, 605 )
+type = ExtResource( 3 )
+
+[node name="Noomba10" parent="EnemySpawns" instance=ExtResource( 4 )]
+position = Vector2( 1529, 603 )
+type = ExtResource( 3 )
+
+[node name="Noomba11" parent="EnemySpawns" instance=ExtResource( 4 )]
+position = Vector2( 1665, 601 )
+type = ExtResource( 3 )
+
+[node name="Noomba12" parent="EnemySpawns" instance=ExtResource( 4 )]
+position = Vector2( 1688, 601 )
+type = ExtResource( 3 )
+
+[node name="Noomba13" parent="EnemySpawns" instance=ExtResource( 4 )]
+position = Vector2( 1726, 598 )
+type = ExtResource( 3 )
+
+[node name="Noomba14" parent="EnemySpawns" instance=ExtResource( 4 )]
+position = Vector2( 1752, 599 )
+type = ExtResource( 3 )
+
+[node name="Noomba15" parent="EnemySpawns" instance=ExtResource( 4 )]
+position = Vector2( 2468, 607 )
+type = ExtResource( 3 )
+
+[node name="Noomba16" parent="EnemySpawns" instance=ExtResource( 4 )]
+position = Vector2( 2491, 606 )
+type = ExtResource( 3 )
