@@ -6,18 +6,19 @@ export var jumpforce = 500
 
 var Kinematic = null; # Not needed if using  '$'
 
-var health = 0
+var health = 1
 func _ready():
 	Kinematic = get_child(0) # Not needed if using '$'
 	pass
 	
 
 func _on_damage():
-	if (health > 0):
-		health -= 1
-	else:
+	health -= 1
+	if health < 1:
 		death()
 		
+func getHealth():
+	return health
 func death():
 	#deathLogic
 	moveSpeed = 0
@@ -32,5 +33,5 @@ func _process(delta):
 	$Kinematic.gravity = gravity
 	$Kinematic.moveSpeed = moveSpeed
 	$Kinematic.jumpforce = jumpforce
-	
+
 
