@@ -18,6 +18,8 @@ script = ExtResource( 5 )
 
 [node name="Character" parent="." instance=ExtResource( 2 )]
 position = Vector2( -207, 591 )
+gravity = 9.0
+jumpforce = 300
 
 [node name="TileMap" parent="." instance=ExtResource( 1 )]
 

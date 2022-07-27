@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 
 export (int) var moveSpeed = 200
-export (float) var gravity = 32
+export (float) var gravity = 8
 export (int) var jumpforce = 500
 var motion = Vector2()
 var sprite = null
@@ -27,13 +27,12 @@ func get_input():
 	else: # Press nothing:
 		motion.x = lerp(motion.x, 0, 0.25) # Smooth towards full stop
 	
-	if is_on_floor(): # If not aerial
-		if Input.is_action_pressed("ui_up"): # Press up:
-			#JumpSound.play() # Play a cool sound
-			motion.y = -jumpforce # And propel upwards
-			## !!TODO!! Make jump be of variable height as in the original SMB
+	# Jump treatment
+	jump()
+		
 	
-	if motion.dot(motion) > 0.25: # If moving
+	if (abs(motion.x) > 0.25) or not is_on_floor(): # If moving
+		print (motion.x)
 		$Sprite.play('Walk') # Look like moving
 	else:
 		$Sprite.play('Normal') # Look like stop
@@ -62,13 +61,26 @@ func parseCollision():
 				damage() # Treats damage
 				pass
 
+# Sends damage to parent node
 func damage():
 	emit_signal('damage')
 
-	
+# Variable jump height!
+func jump():
+	if is_on_floor() && Input.is_action_just_pressed("ui_up"): # Press up:
+			#JumpSound.play() # Play a cool sound
+			motion.y = -jumpforce # And propel upwards
+			
+	motion.y += gravity # Fall
+	if motion.y > 0:
+		motion += Vector2.UP * (-9.81) * 2.5 # Fall is faster than jump
+	elif motion.y < 0 && Input.is_action_just_released("up"): #Player is jumping 
+		motion += Vector2.UP * (-9.81) * (15) #Jump Height depends on how long you will hold key	
 	
 func _physics_process(delta):
 	get_input()
-	motion.y += gravity + delta # Fall
+	
+	
+	
 	motion = move_and_slide(motion, Vector2.UP)
 	parseCollision()
